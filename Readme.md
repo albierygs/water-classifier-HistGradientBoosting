@@ -1,6 +1,7 @@
 # water-classifier-hgbc
 
 🎓 Contexto Acadêmico
+
 Universidade: Universidade do Estado da Bahia (UNEB)
 
 Curso: Engenharia de Software
@@ -10,6 +11,7 @@ Matéria: Aprendizado de Máquina em IA - Machine Learning
 Docente: Marcos Figueredo
 
 📄 Resumo do Projeto
+
 Este projeto consiste na implementação e otimização de um classificador para determinar a potabilidade da água (Potability) a partir de dados físico-químicos contidos no dataset water.csv. O trabalho segue um protocolo rigoroso de validação cruzada e busca de hiperparâmetros, conforme exigido pelo roteiro da atividade.
 
 Modelo Escolhido: HistGradientBoostingClassifier (HGBC).
@@ -17,6 +19,7 @@ Modelo Escolhido: HistGradientBoostingClassifier (HGBC).
 Metodologia: Stratified K-Fold (k=5) e Randomized Search, com foco na otimização da métrica ROC-AUC.
 
 📁 Estrutura do Repositório
+
 O projeto segue a estrutura modular para garantir a separação de responsabilidades e a execução via CLI (Command Line Interface):
 
 ```
@@ -38,6 +41,7 @@ water-classifier-hgbc/
 ```
 
 ⚙️ Requisitos e Instalação
+
 O projeto requer Python 3.8+ e as bibliotecas listadas no requirements.txt.
 
 Clone o repositório:
@@ -54,9 +58,11 @@ pip install -r requirements.txt
 ```
 
 🚀 Protocolo de Execução (Reprodutibilidade)
+
 A execução do projeto é realizada via linha de comando (CLI), com a semente fixa (random_state=42) garantindo que os resultados sejam 100% replicáveis.
 
 1. Treinamento e Otimização (CV)
+   
    Este comando executa a validação cruzada estratificada e a busca de hiperparâmetros (Randomized Search), salvando o modelo otimizado em artifacts/best.pkl.
 
    ```bash
@@ -64,6 +70,7 @@ A execução do projeto é realizada via linha de comando (CLI), com a semente f
    ```
 
 2. Avaliação Final e Geração de Figuras
+   
    Este comando carrega o modelo otimizado e realiza a avaliação no conjunto de teste hold-out, salvando as métricas finais em reports/results.csv e todas as figuras exigidas em figures/.
 
    ```bash
@@ -71,6 +78,7 @@ A execução do projeto é realizada via linha de comando (CLI), com a semente f
    ```
 
 📊 Resultados do Melhor Modelo
+
 O modelo HGBC foi otimizado utilizando o Stratified K-Fold. O melhor desempenho e a avaliação final demonstram a alta capacidade preditiva do classificador:
 
 | Métrica  | Desempenho em CV (μ±σ) | Desempenho no Teste Final |
@@ -82,4 +90,5 @@ O modelo HGBC foi otimizado utilizando o Stratified K-Fold. O melhor desempenho 
 O baixo desvio padrão em CV (σ=0.0082) confirma que a variância do modelo foi efetivamente controlada pela regularização de hiperparâmetros, resultando em um classificador estável e confiável.
 
 📜 Licença
+
 Este projeto está licenciado sob os termos da licença MIT, conforme detalhado no arquivo LICENSE na raiz do repositório.
