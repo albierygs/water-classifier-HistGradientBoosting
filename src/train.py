@@ -14,11 +14,9 @@ from src.config import K_FOLDS, RANDOM_STATE, REPORTS_DIR, DATA_PATH, HGBC_PARAM
 from src.model import get_pipeline
 from src.utils import save_artifact
 
-# Import preprocessing
 from src.preprocess import load_and_preprocess
 
 def parse_args():
-    """Handles command-line arguments for CLI execution."""
     parser = argparse.ArgumentParser(description="Train and tune HistGradientBoostingClassifier model.")
     parser.add_argument('--data', type=str, default=DATA_PATH, help='Path to the water.csv dataset.')
     parser.add_argument('--out', type=str, default=REPORTS_DIR, help='Output directory for CV results.')
@@ -27,35 +25,35 @@ def parse_args():
     return parser.parse_args()
 
 def run_training_and_cv(args):
-    """Executes the Stratified K-Fold and Hyperparameter Search."""
+    
     print("Loading and preprocessing data...")
     X, y = load_and_preprocess(args.data)
     
-    # 3. Define Stratified K-Fold Cross-Validation
+    # Define Stratified K-Fold Cross-Validation
     kf = StratifiedKFold(n_splits=args.k, shuffle=True, random_state=args.seed)
 
-    # 4. Randomized Search setup
+    # Randomized Search setup
     rs = RandomizedSearchCV(
         get_pipeline(), 
         param_distributions=HGBC_PARAM_DIST, 
-        n_iter=50, # Number of parameter settings that are sampled (adjust based on resources)
+        n_iter=50,
         cv=kf,
-        scoring='roc_auc', # Optimization metric
+        scoring='roc_auc',
         n_jobs=-1, 
         random_state=args.seed, 
         verbose=1
     )
     
-    # 5. Execute Search
+    # Execute Search
     print(f"\nStarting Randomized Search with {args.k}-Fold Stratified CV...")
     rs.fit(X, y)
     
     best_model = rs.best_estimator_
     
-    # 6. Save Artifacts
+    # Save Artifacts
     save_artifact(best_model, 'best.pkl', ARTIFACTS_DIR)
         
-    print("\n✅ Training complete.")
+    print("\nTraining complete.")
     print(f"Best Hyperparameters: {rs.best_params_}")
     print(f"Best ROC-AUC on CV: {rs.best_score_:.4f}")
     
@@ -70,7 +68,7 @@ def run_training_and_cv(args):
     
     # Save the full results of all iterations
     results_df.to_csv(f'{args.out}/cv_results.csv', index=False)
-    print(f"✅ Full CV results saved to {args.out}/cv_results.csv")
+    print(f"Full CV results saved to {args.out}/cv_results.csv")
 
 if __name__ == '__main__':
     args = parse_args()

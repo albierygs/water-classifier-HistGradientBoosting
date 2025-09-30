@@ -4,12 +4,12 @@ from sklearn.impute import SimpleImputer
 def load_and_preprocess(file_path):
     df = pd.read_csv(file_path)
     
-    # Definição do alvo
+    # Target definition
     TARGET_COL = "Potability"
     y = df[TARGET_COL].astype(int)
     X = df.drop(columns=[TARGET_COL])
     
-    # Tratamento de Ausentes por Mediana
+    # Treatment of Absent Persons by Median
     imputer = SimpleImputer(strategy="median")
     X_imputed = pd.DataFrame(
         imputer.fit_transform(X),
@@ -20,7 +20,6 @@ def load_and_preprocess(file_path):
     return X_imputed, y
 
 if __name__ == '__main__':
-    # Simple test for the module
     try:
         X, y = load_and_preprocess('../../data/raw/water.csv')
         print(f"Data successfully loaded. X shape: {X.shape}, y shape: {y.shape}")

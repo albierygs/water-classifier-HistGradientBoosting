@@ -6,20 +6,17 @@ from sklearn.pipeline import Pipeline
 from src.config import RANDOM_STATE
 
 def get_pipeline():
-    """
-    Returns the HistGradientBoostingClassifier pipeline, including
-    the required median imputation preprocessing step.
-    """
-    # 1. Imputação por Mediana (Protocolo Mínimo)
+    
+    # Median Imputation
     imputer = SimpleImputer(strategy="median")
     
-    # 2. HistGradientBoostingClassifier (Modelo escolhido)
+    # HistGradientBoostingClassifier
     hgbc = HistGradientBoostingClassifier(random_state=RANDOM_STATE)
     
-    # 3. Montagem do Pipeline
+    # Pipeline Assembly
     pipeline = Pipeline([
         ("imputer", imputer),
-        ("clf", hgbc) # clf stands for classifier
+        ("clf", hgbc)
     ])
     
     return pipeline
