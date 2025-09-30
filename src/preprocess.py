@@ -18,3 +18,11 @@ def load_and_preprocess(file_path):
     )
     
     return X_imputed, y
+
+if __name__ == '__main__':
+    # Simple test for the module
+    try:
+        X, y = load_and_preprocess('../../data/raw/water.csv')
+        print(f"Data successfully loaded. X shape: {X.shape}, y shape: {y.shape}")
+    except Exception as e:
+        print(e)
